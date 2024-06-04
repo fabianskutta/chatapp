@@ -18,7 +18,7 @@ public class ChatServer extends Server {
     public ChatServer(int p) {
         super(p);
         Msg = new MsgGateway();
-        UsrOnline = new List<>();
+        UsrOnline = new List<>() ;
     }
 
     /**
