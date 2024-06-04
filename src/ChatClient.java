@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 /**
  * Klasse fuer einen SpielClient
@@ -11,67 +13,14 @@ public class ChatClient extends Client {
     }
 
     /**
+     * @ author 
+     * Hier wird anhand des Protokolls die richtige Komunikation sichergestellt.
      * Diese Methode der Server-Klasse wird hiermit ueberschrieben.
      * Der Client gibt die erhaltende Meldung, auf dem Textfeld aus.
      */
 
     public void processMessage(String message){
-        switch(gibBefehlsbereich(message))
-        {
-            case "+OK":
-            {
-                System.out.println(gibTextbereich(message));
-                break;
-            }
-            
-            case "FLS":
-            {
-                System.out.println(gibTextbereich(message));
-                break;
-            }
-            
-            case "TRU":
-            {
-                System.out.println(gibTextbereich(message));
-                break;
-            }
-                
-            case "GHC":
-            {
-                System.out.println(message);
-                break;
-            }
-            
-            case "END":
-            {
-                System.out.println(gibTextbereich(message));    
-                break;
-            }
-            
-            case "-E1":
-            {
-                System.out.println(gibTextbereich(message));
-                break;
-            }
-            
-            case "-E2":
-            {
-                System.out.println(gibTextbereich(message));
-                break;
-            }
-            
-            case "-E3":
-            {
-                System.out.println(gibTextbereich(message));
-                break;
-            }
-            
-            default:
-            {
-                System.out.println("Befehl falsch. Bitte richtigen Befehl eintippen.");
-                break;
-            }
-        }
+        
     }
 
     /**
@@ -105,16 +54,12 @@ public class ChatClient extends Client {
     }
 
     /**
-     * Diese Methode druckt die Higscoreliste auf der Konsole aus.
+     * @ author^^
+     * Diese Methode druckt die Nachrichten auf der Konsole aus.
      * @param message
      */
-    private void highscorelisteDrucken(String message)
+    private void NachrichtenDrucken(String message)
     {
-        String [] plaetze = message.split(" ");
-        for(int i = 1; i < plaetze.length; i++)
-        {
-            String [] eintrag = plaetze[i-1].split(":");
-            System.out.println(i+". "+eintrag[0]+"\t : \t"+eintrag[1]);
-        }
+        
     }
 }

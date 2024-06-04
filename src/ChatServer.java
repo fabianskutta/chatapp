@@ -1,3 +1,5 @@
+package src;
+
 import java.net.*;
 
 /**
@@ -96,7 +98,9 @@ public class ChatServer extends Server {
 
     }
 
-
+    /**
+     * @author Fabian
+     */
     private boolean istGueltigerName(String name) {
         return name.matches("[a-zA-Z]{1,20}");
     }
@@ -137,6 +141,14 @@ public class ChatServer extends Server {
     private synchronized String gibBefehlsbereich(String message)
     {
         return message.split(" ")[0];
+    }
+    
+    /**
+     * Diese Methode teilt die Nachricht auf Bereiche auf. 
+     */
+    private String gibBereich(String message, int bereich)
+    {
+        return message.split(" ")[bereich];
     }
 
     /**
