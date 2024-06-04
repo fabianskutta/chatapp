@@ -54,6 +54,14 @@ public class ChatServer extends Server {
     private synchronized void setOnlineUsr(String pClientIP, int pClientPort)
     {
     }
+
+     /**
+     * Methode, die den User mit der übergebenen Client-IP, setzt
+     * @param pClientIP
+     */
+    private synchronized void pruefePasswort(String pPasswort)
+    {
+    }
     
     /**
      * Diese Methode generiert einen String aus den Nachrichten der übergebenen Liste.
