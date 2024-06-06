@@ -26,21 +26,21 @@ public class UsrGateway
      * 
      * @return Liste aller Einträge
      */
-    public User<user> holeAlle()
+    public List<User> holeAlle()
     {
         verbinde();
-        List <User> highscore = new List();
-        db.executeStatement("Select id, name, punkte from highscore ORDER BY punkte ASC");
+        List <User> user = new List();
+        db.executeStatement("Select userID, benutzer, passwort from highscore ORDER BY punkte ASC");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
             for(int i = 0; i < ergebnis.getRowCount(); i++)
             {
-                highscore.append(new User(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
+                user.append(new User(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
             }
         }
         beende();
-        return highscore;
+        return user;
     }
     
     
@@ -55,13 +55,13 @@ public class UsrGateway
     {
         verbinde();
         List <User> user = new List();
-        db.executeStatement("Select id, name, punkte from highscore WHERE name = '"+name+"' ORDER BY punkte ASC");
+        db.executeStatement("Select id, name, punkte from highscore WHERE benutzer = '"+benutzer+"' ORDER BY punkte ASC");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
             for(int i = 0; i < ergebnis.getRowCount(); i++)
             {
-                user.append(new user(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
+                user.append(new User(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
             }
         }
         beende();
@@ -74,10 +74,10 @@ public class UsrGateway
      * @param name
      * @param punkte
      */
-    public void hinzufuegen(int id, String passwort, String benutzer)
+    public void hinzufuegen(int userID, String passwort, String benutzer)
     {
         verbinde();
-        db.executeStatement("INSERT INTO highscore (name, punkte) VALUES ('"+name+"', "+punkte+")");
+        db.executeStatement("INSERT INTO highscore (name, punkte) VALUES ('"+userID+"', "+benutzer+", "+passwort+")");
         beende();
     }
     
@@ -88,7 +88,7 @@ public class UsrGateway
     public void erzeugeTabelle()
     {
          verbinde();
-         db.executeStatement("Create table if not exists highscore (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, punkte int)");
+         db.executeStatement("Create table if not exists user (id INTEGER PRIMARY KEY AUTOINCREMENT, benutzer text, passwort text, userID)");
          beende();
     }
     
@@ -99,7 +99,7 @@ public class UsrGateway
     {
         if(db == null)
         {
-            db = new DatabaseConnector("",0,"spielstand","","");
+            db = new DatabaseConnector("",0,"user","","");
         }
     }
     

@@ -30,7 +30,7 @@ public class MsgGateway
     {
         verbinde();
         List <Nachricht> nachrichten = new List();
-        db.executeStatement("Select id, name, punkte from highscore ORDER BY punkte ASC");
+        db.executeStatement("Select userID, nachricht from Nachrichten");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
@@ -49,10 +49,10 @@ public class MsgGateway
      * @param name
      * @param punkte
      */
-    public void postMessage(String nachricht, String date, int userID)
+    public void postMessage(String nachricht,int userID)
     {
         verbinde();
-        db.executeStatement("INSERT INTO highscore (name, punkte) VALUES ('"+name+"', "+punkte+")");
+        db.executeStatement("INSERT INTO highscore (nachricht, userID) VALUES ('"+nachricht+"', "+userID+")");
         beende();
     }
     
@@ -62,7 +62,7 @@ public class MsgGateway
     public void erzeugeTabelleNachrichten()
     {
          verbinde();
-         db.executeStatement("Create table if not exists Nachrichten (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, Nachrichten String)");
+         db.executeStatement("Create table if not exists Nachrichten (id INTEGER PRIMARY KEY AUTOINCREMENT, userID int, Nachrichten String)");
          beende();
     }
     
@@ -73,7 +73,7 @@ public class MsgGateway
     {
         if(db == null)
         {
-            db = new DatabaseConnector("",0,"spielstand","","");
+            db = new DatabaseConnector("",0,"Nachrichten","","");
         }
     }
     

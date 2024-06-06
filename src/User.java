@@ -9,16 +9,16 @@ public class User
 {
     private String passwort;
     private String benutzer;
-    private int id;
+    private int Userid;
 
     /**
      * Konstruktor der Klasse Eintrag
      * @param punkte : int
      * @param name : String
      */
-    public User(int id, String benutzer, String passwort)
+    public User(int Userid, String benutzer, String passwort)
     {
-        this.id = id;
+        this.Userid = Userid;
         this.benutzer = benutzer;
         this.passwort = passwort;
     }
@@ -38,9 +38,9 @@ public class User
      * 
      * @return name : String
      */
-    public int gibid()
+    public int gibuserid()
     {
-        return this.id;
+        return this.Userid;
     }
     
     /**
