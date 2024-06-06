@@ -22,29 +22,6 @@ public class UsrGateway
     }
     
     /**
-     * Diese Methode setzt die READ-Funktion um, indem man sich alle Objekte der Tabelle liefern lassen kann.
-     * 
-     * @return Liste aller Einträge
-     */
-    public List<User> holeAlle()
-    {
-        verbinde();
-        List <User> user = new List();
-        db.executeStatement("Select userID, benutzer, passwort from highscore ORDER BY punkte ASC");
-        QueryResult ergebnis = db.getCurrentQueryResult();
-        if(ergebnis != null)
-        {
-            for(int i = 0; i < ergebnis.getRowCount(); i++)
-            {
-                user.append(new User(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
-            }
-        }
-        beende();
-        return user;
-    }
-    
-    
-    /**
      * Diese Methode setzt die READ-Funktion um, indem man sich alle Objekte der Tabelle liefern lassen kann, die den selben Namen besitzen.
      * 
      * @param text
@@ -55,13 +32,13 @@ public class UsrGateway
     {
         verbinde();
         List <User> user = new List();
-        db.executeStatement("Select id, name, punkte from highscore WHERE benutzer = '"+benutzer+"' ORDER BY punkte ASC");
+        db.executeStatement("Select id, name, punkte from highscore WHERE benutzer = '"+benutzer+"'");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
             for(int i = 0; i < ergebnis.getRowCount(); i++)
             {
-                user.append(new User(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
+                user.append(new User(Integer.parseInt(ergebnis.getData()[i][0]), ergebnis.getData()[i][1], ergebnis.getData()[i][2]));
             }
         }
         beende();

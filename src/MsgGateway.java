@@ -30,13 +30,13 @@ public class MsgGateway
     {
         verbinde();
         List <Nachricht> nachrichten = new List();
-        db.executeStatement("Select userID, nachricht from Nachrichten");
+        db.executeStatement("Select userID, nachricht, name from Nachrichten");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
             for(int i = 0; i < ergebnis.getRowCount(); i++)
             {
-                nachrichten.append(new Nachricht(ergebnis.getData()[i][0], ergebnis.getData()[i][1], Integer.parseInt(ergebnis.getData()[i][2])));
+                nachrichten.append(new Nachricht(ergebnis.getData()[i][0], ergebnis.getData()[i][1], ergebnis.getData()[i][2]));
             }
         }
         beende();
@@ -49,10 +49,10 @@ public class MsgGateway
      * @param name
      * @param punkte
      */
-    public void postMessage(String nachricht,int userID)
+    public void postMessage(String nachricht,int userID, String name)
     {
         verbinde();
-        db.executeStatement("INSERT INTO highscore (nachricht, userID) VALUES ('"+nachricht+"', "+userID+")");
+        db.executeStatement("INSERT INTO highscore (nachricht, userID) VALUES ('"+nachricht+"', "+userID+", "+name+")");
         beende();
     }
     
@@ -62,7 +62,7 @@ public class MsgGateway
     public void erzeugeTabelleNachrichten()
     {
          verbinde();
-         db.executeStatement("Create table if not exists Nachrichten (id INTEGER PRIMARY KEY AUTOINCREMENT, userID int, Nachrichten String)");
+         db.executeStatement("Create table if not exists Nachrichten (id INTEGER PRIMARY KEY AUTOINCREMENT, userID int, Nachrichten String, name String)");
          beende();
     }
     

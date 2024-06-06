@@ -20,8 +20,47 @@ public class ChatClient extends Client {
      */
 
     public void processMessage(String message){
-        
+        switch(gibBefehlsbereich(message))
+        {
+          case "+Usr": 
+          {
+              System.out.println(gibTextbereich(message));
+              break;
+          }
+          case "-err":
+          {
+              System.out.println(gibTextbereich(message));
+              break;
+          }
+          case "+REG": 
+          {
+              System.out.println(gibTextbereich(message));
+              break;
+          }
+          case "+SND": 
+          {
+              System.out.println(gibBereich( message, 2));
+              System.out.println(gibBereich( message, 3));
+              break;
+          }
+          case "+OK": 
+          {
+              System.out.println(gibTextbereich(message));
+              break;
+          }
+          case "drucke": 
+          {
+              
+          }
+          default: 
+          {
+              System.out.println("Befehl falsch. Bitte richtigen Befehl eintippen.");
+              break;
+          }
+          
+        }
     }
+
 
     /**
      * Diese Methode gibt den Befehl zurück die die message beinhaltet
@@ -53,13 +92,4 @@ public class ChatClient extends Client {
         return text;
     }
 
-    /**
-     * @ author^^
-     * Diese Methode druckt die Nachrichten auf der Konsole aus.
-     * @param message
-     */
-    private void NachrichtenDrucken(String message)
-    {
-        
-    }
 }

@@ -7,7 +7,7 @@ package src;
  */
 public class Nachricht
 {
-    private String Nachricht;
+    private String nachricht;
     private String name;
     private String id;
 
@@ -16,10 +16,10 @@ public class Nachricht
      * @param punkte : int
      * @param name : String
      */
-    public Nachricht(String id, String name, int punkte)
+    public Nachricht(String id, String nachricht, String name)
     {
         this.id = id;
-        this.Nachricht = Nachricht;
+        this.nachricht = nachricht;
         this.name = name;
     }
 
@@ -30,7 +30,7 @@ public class Nachricht
      */
     public String gibNachricht()
     {
-        return this.Nachricht;
+        return this.nachricht;
     }
     
     /**
