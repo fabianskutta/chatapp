@@ -30,7 +30,7 @@ public class MsgGateway
     {
         verbinde();
         List <Nachricht> nachrichten = new List();
-        db.executeStatement("Select userID, nachricht, name from Nachrichten");
+        db.executeStatement("Select nachricht, name from Nachrichten");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
@@ -52,7 +52,7 @@ public class MsgGateway
     public void postMessage(String nachricht,int userID, String name)
     {
         verbinde();
-        db.executeStatement("INSERT INTO highscore (nachricht, userID) VALUES ('"+nachricht+"', "+userID+", "+name+")");
+        db.executeStatement("INSERT INTO Nachrichten (nachricht, name) VALUES ('"+nachricht+"', "+name+")");
         beende();
     }
     
@@ -62,7 +62,7 @@ public class MsgGateway
     public void erzeugeTabelleNachrichten()
     {
          verbinde();
-         db.executeStatement("Create table if not exists Nachrichten (id INTEGER PRIMARY KEY AUTOINCREMENT, userID int, Nachrichten String, name String)");
+         db.executeStatement("Create table if not exists Nachrichten (id INTEGER PRIMARY KEY AUTOINCREMENT, Nachrichten String, name String)");
          beende();
     }
     

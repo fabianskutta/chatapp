@@ -6,17 +6,20 @@ package src;
  * @author (Ihr Name) 
  * @version (eine Versionsnummer oder ein Datum)
  */
-public class kodierung implements Verschlüsselung
+public class CeasarKryptomodul implements Verschlüsselung
 {
     
     private Queue<String> Sub;
     private int key;
+    private String gespeicherterSchlüssel;
+
     /**
      * Konstruktor für Objekte der Klasse kodierung
      */
-    public kodierung()
+    public CeasarKryptomodul()
     {
         this.Sub = new Queue<String>();
+        this.gespeicherterSchlüssel = "";
     }
     
     public Queue<String> befuellen() {
@@ -29,7 +32,8 @@ public class kodierung implements Verschlüsselung
         return Sub;
     }
     
-    public String verschluesseln(String klartext, int key){
+    public String verschlüsseln(String klartext){
+        key = Integer.valueOf(ladeSchlüssel());
         String erg="";
         klartext.toUpperCase();
         for(int i = 0; i<klartext.length(); i++){
@@ -48,25 +52,34 @@ public class kodierung implements Verschlüsselung
         }
         return erg;
     }
-    
-    public String entschluesseln(String geheimtext, int key){
-        String erg="";
-        geheimtext.toUpperCase();
-        for(int i=0; i<geheimtext.length(); i++){
-            String aktuell = String.valueOf(geheimtext.charAt(i)); //Buchstabe an Stelle i im String
-            //Buchstabe i in der Queue finden
-            while(!Sub.front().equals(aktuell)){
+      
+
+    public String entschlüsseln(String geheimtext) {
+        key = Integer.valueOf(ladeSchlüssel());
+        String erg = "";
+        geheimtext = geheimtext.toUpperCase();
+        for (int i = 0; i < geheimtext.length(); i++) {
+            String aktuell = String.valueOf(geheimtext.charAt(i)); // Buchstabe an Stelle i im String
+            // Buchstabe i in der Queue finden
+            while (!Sub.front().equals(aktuell)) {
                 Sub.enqueue(Sub.front());
                 Sub.dequeue();
             }
-            //Schluesselverschiebung hinzufügen
-            for(int a=0; a<a-key; a++){
+            // Schluesselverschiebung rückgängig machen
+            for (int a = 0; a < 26 - key; a++) {
                 Sub.enqueue(Sub.front());
                 Sub.dequeue();
             }
-            erg = erg+Sub.front();
+            erg = erg + Sub.front();
         }
         return erg;
     }
 
+    public void speichereSchlüssel(String schlüssel) {
+        this.gespeicherterSchlüssel = schlüssel;
+    }
+
+    public String ladeSchlüssel() {
+        return this.gespeicherterSchlüssel;
+    }
 }

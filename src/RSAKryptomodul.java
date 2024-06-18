@@ -52,7 +52,7 @@ public class RSAKryptomodul implements Verschlüsselung {
     }
 
     @Override
-    public String verschlüsseln(String kt, int schlüssel) {
+    public String verschlüsseln(String kt) {
         try {
             PublicKey publicKey = stringToPublicKey(ladeSchlüssel());
             Cipher encryptCipher = Cipher.getInstance("RSA");
@@ -66,7 +66,7 @@ public class RSAKryptomodul implements Verschlüsselung {
     }
 
     @Override
-    public String entschlüsseln(String vt, int schlüssel) {
+    public String entschlüsseln(String vt) {
         try {
             PrivateKey privateKey = stringToPrivateKey(ladeSchlüssel());
             byte[] bytes = Base64.getDecoder().decode(vt);

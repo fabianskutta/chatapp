@@ -1,18 +1,20 @@
 package src;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class VigenereKryptomodul implements Verschlüsselung {
     private String schluessel;
 
     // Methode zur Verschlüsselung
     @Override
-    public String verschlüsseln(String kt, int schlüssel) {
+    public String verschlüsseln(String kt) {
         String key = ladeSchlüssel();
         return vigenereEncrypt(kt, key);
     }
 
     // Methode zur Entschlüsselung
     @Override
-    public String entschlüsseln(String vt, int schlüssel) {
+    public String entschlüsseln(String vt) {
         String key = ladeSchlüssel();
         return vigenereDecrypt(vt, key);
     }
@@ -74,24 +76,5 @@ public class VigenereKryptomodul implements Verschlüsselung {
         return result.toString();
     }
 
-    public static void main(String[] args) {
-        VigenereKryptomodul vigenere = new VigenereKryptomodul();
-        String schluessel = "VIGENERE";
-
-        // Schlüssel speichern
-        vigenere.speichereSchlüssel(schluessel);
-
-        // Beispieltext
-        String klartext = "Hello, World!";
-        System.out.println("Klartext: " + klartext);
-
-        // Verschlüsseln
-        String verschluesselt = vigenere.verschlüsseln(klartext, 0);
-        System.out.println("Verschlüsselter Text: " + verschluesselt);
-
-        // Entschlüsseln
-        String entschluesselt = vigenere.entschlüsseln(verschluesselt, 0);
-        System.out.println("Entschlüsselter Text: " + entschluesselt);
-    }
 }
 

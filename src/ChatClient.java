@@ -73,6 +73,14 @@ public class ChatClient extends Client {
     {
         return message.split(" ")[0];
     }
+    
+    /**
+     * Diese Methode teilt die Nachricht auf Bereiche auf. 
+     */
+    private String gibBereich(String message, int bereich)
+    {
+        return message.split(" ")[bereich];
+    }
 
     /**
      * Diese Methode gibt den Text zurück die die message beinhaltet

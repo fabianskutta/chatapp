@@ -32,7 +32,7 @@ public class UsrGateway
     {
         verbinde();
         List <User> user = new List();
-        db.executeStatement("Select id, name, punkte from highscore WHERE benutzer = '"+benutzer+"'");
+        db.executeStatement("Select passwort, benutzer from User WHERE benutzer = '"+benutzer+"'");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
@@ -51,10 +51,10 @@ public class UsrGateway
      * @param name
      * @param punkte
      */
-    public void hinzufuegen(int userID, String passwort, String benutzer)
+    public void hinzufuegen( String passwort, String benutzer)
     {
         verbinde();
-        db.executeStatement("INSERT INTO highscore (name, punkte) VALUES ('"+userID+"', "+benutzer+", "+passwort+")");
+        db.executeStatement("INSERT INTO User ( passwort, benutzer) VALUES ("+passwort+", "+benutzer+")");
         beende();
     }
     
@@ -65,7 +65,7 @@ public class UsrGateway
     public void erzeugeTabelle()
     {
          verbinde();
-         db.executeStatement("Create table if not exists user (id INTEGER PRIMARY KEY AUTOINCREMENT, benutzer text, passwort text, userID)");
+         db.executeStatement("Create table if not exists User (id INTEGER PRIMARY KEY AUTOINCREMENT, benutzer text, passwort text)");
          beende();
     }
     

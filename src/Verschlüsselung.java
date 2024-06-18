@@ -8,9 +8,9 @@ package src;
 public interface Verschlüsselung
 {
     // Dienste
-    public String verschlüsseln(String kt, int schlüssel);
+    public String verschlüsseln(String kt);
     
-    public String entschlüsseln(String vt, int schlüssel);
+    public String entschlüsseln(String vt);
     
     public void speichereSchlüssel(String schlüssel);
     
