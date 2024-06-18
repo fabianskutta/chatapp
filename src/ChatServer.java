@@ -87,7 +87,7 @@ public class ChatServer extends Server {
      * @return true, wenn Registrierung erfolgreich, sonst false
      */
     private boolean registieren(String name, String passwort) {
-        if (istGueltigerName(name) && usrGateway.sucheNachBenutzer(name).isEmpty()) {
+        if (istGueltigerName(name) && usrGateway.sucheNachbenutzer(name).isEmpty()) {
             usrGateway.hinzufuegen(name, passwort);
             return true;
         }

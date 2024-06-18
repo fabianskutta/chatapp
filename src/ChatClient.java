@@ -48,10 +48,6 @@ public class ChatClient extends Client {
               System.out.println(gibTextbereich(message));
               break;
           }
-          case "drucke": 
-          {
-              
-          }
           default: 
           {
               System.out.println("Befehl falsch. Bitte richtigen Befehl eintippen.");
