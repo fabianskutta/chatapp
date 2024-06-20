@@ -15,11 +15,8 @@ public class ChatServer extends Server {
 
     public ChatServer(int port) {
         super(port);
-        usrGateway = new UsrGateway();
-        usrGateway.erzeugeTabelle();
         msgGateway = new MsgGateway();
-        msgGateway.erzeugeTabelleNachrichten();
-        
+        usrGateway = new UsrGateway();
     }
 
     /**
@@ -54,9 +51,32 @@ public class ChatServer extends Server {
                     send(clientIP, clientPort, "-ERR Registrierung fehlgeschlagen");
                 }
                 break;
+            case "SND":
+                boolean sent = sendeNachricht(clientIP, clientPort, gibBereich(message, 2));
+                if (sent) {
+                    send(clientIP, clientPort, "+OK Nachricht gesendet");
+                } else {
+                    send(clientIP, clientPort, "-ERR Senden fehlgeschlagen");
+                }
+                break;
+            case "abmelden":
+                send(clientIP, clientPort, "+OK Verbindung getrennt");
+                processClosingConnection(clientIP, clientPort);
+                break;
             default:
                 send(clientIP, clientPort, "-ERR Unbekannter Befehl");
         }
+    }
+
+    /**
+     * Diese Methode der Server-Klasse wird hiermit überschrieben.
+     * Hier wird die Verbindung des Clients geschlossen.
+     */
+    @Override
+    public void processClosingConnection(String clientIP, int clientPort) {
+        // Cleanup code for when a client disconnects
+        System.out.println("Client " + clientIP + ":" + clientPort + " hat die Verbindung geschlossen.");
+        // Additional cleanup or notification logic can be added here if necessary
     }
 
     /**
@@ -73,13 +93,10 @@ public class ChatServer extends Server {
      * @return true, wenn Anmeldung erfolgreich, sonst false
      */
     private boolean anmelden(String name, String passwort) {
-        List<User> users = usrGateway.sucheNachBenutzer(name);
-        if (!users.isEmpty()) {
-            User user = users.get(0); // Assuming usernames are unique
-            if (user.hasAccess(passwort)) {
+        User l = getUser(name);
+            if () {
                 return true;
             }
-        }
         return false;
     }
 
@@ -90,11 +107,27 @@ public class ChatServer extends Server {
      * @return true, wenn Registrierung erfolgreich, sonst false
      */
     private boolean registieren(String name, String passwort) {
-        if (istGueltigerName(name) && usrGateway.sucheNachbenutzer(name).isEmpty()) {
+        if (istGueltigerName(name) && usrGateway.sucheNachBenutzer(name).isEmpty()) {
             usrGateway.hinzufuegen(name, passwort);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Methode zum Senden einer Nachricht
+     * @param clientIP IP-Adresse des Clients
+     * @param clientPort Port des Clients
+     * @param nachricht Nachricht
+     * @return true, wenn Senden erfolgreich, sonst false
+     */
+    private boolean sendeNachricht(String clientIP, int clientPort, String nachricht) {
+        try {
+            msgGateway.speichereNachricht(clientIP, clientPort, nachricht);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -108,13 +141,6 @@ public class ChatServer extends Server {
         return "";
     }
 
-    /**
-     * Methode, die den User mit der übergebenen Client-IP setzt.
-     * @param pPasswort
-     */
-    private void pruefePasswort(String pPasswort) {
-        // Implement logic here
-    }
 
     /**
      * Diese Methode generiert einen String aus den Nachrichten der übergebenen Liste.
