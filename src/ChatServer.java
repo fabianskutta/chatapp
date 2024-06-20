@@ -108,7 +108,7 @@ public class ChatServer extends Server {
      */
     private boolean registieren(String name, String passwort) {
         if (istGueltigerName(name) && usrGateway.getUser(name) == null) {
-            usrGateway.(passwort, name);
+            usrGateway.hinzufuegen(0, passwort, passwort);
             return true;
         }
         return false;
