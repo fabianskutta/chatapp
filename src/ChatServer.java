@@ -52,7 +52,7 @@ public class ChatServer extends Server {
                 }
                 break;
             case "SND":
-                boolean sent = sendeNachricht(clientIP, clientPort, gibBereich(message, 2));
+                boolean sent = sendeNachricht(gibBereich(message, 2));
                 if (sent) {
                     send(clientIP, clientPort, "+OK Nachricht gesendet");
                 } else {
@@ -93,10 +93,10 @@ public class ChatServer extends Server {
      * @return true, wenn Anmeldung erfolgreich, sonst false
      */
     private boolean anmelden(String name, String passwort) {
-        User l = getUser(name);
-            if () {
-                return true;
-            }
+        User u = usrGateway.getUser(name);
+        if (u != null && u.gibpasswort().equals(passwort)) { // Zugriff auf das Passwort-Attribut
+            return true;
+        }
         return false;
     }
 
@@ -107,8 +107,8 @@ public class ChatServer extends Server {
      * @return true, wenn Registrierung erfolgreich, sonst false
      */
     private boolean registieren(String name, String passwort) {
-        if (istGueltigerName(name) && usrGateway.sucheNachBenutzer(name).isEmpty()) {
-            usrGateway.hinzufuegen(name, passwort);
+        if (istGueltigerName(name) && usrGateway.getUser(name) == null) {
+            usrGateway.(passwort, name);
             return true;
         }
         return false;
@@ -121,9 +121,9 @@ public class ChatServer extends Server {
      * @param nachricht Nachricht
      * @return true, wenn Senden erfolgreich, sonst false
      */
-    private boolean sendeNachricht(String clientIP, int clientPort, String nachricht) {
+    private boolean sendeNachricht(String nachricht, int userID, String name) {
         try {
-            msgGateway.speichereNachricht(clientIP, clientPort, nachricht);
+            msgGateway.postMessage(nachricht, userID, name);
             return true;
         } catch (Exception e) {
             return false;
