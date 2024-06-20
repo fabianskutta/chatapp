@@ -28,18 +28,15 @@ public class UsrGateway
      * 
      * @return Liste aller Einträge
      */
-    public List<User> sucheNachbenutzer(String benutzer)
+    public User getUser(String benutzer)
     {
         verbinde();
-        List <User> user = new List();
+        User user = null;
         db.executeStatement("Select userID, passwort, benutzer from User WHERE benutzer = '"+benutzer+"'");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
-            for(int i = 0; i < ergebnis.getRowCount(); i++)
-            {
-                user.append(new User(Integer.parseInt(ergebnis.getData()[i][0]), ergebnis.getData()[i][1], ergebnis.getData()[i][2]));
-            }
+            user = new User(Integer.parseInt(ergebnis.getData()[0][0]), ergebnis.getData()[0][1], ergebnis.getData()[0][2]);
         }
         beende();
         return user;
@@ -54,7 +51,7 @@ public class UsrGateway
     public void hinzufuegen(int userID, String passwort, String benutzer)
     {
         verbinde();
-        db.executeStatement("INSERT INTO User (userid, passwort, benutzer) VALUES ('"+userID+"', "+passwort+", "+benutzer+")");
+        db.executeStatement("INSERT INTO User (userID, passwort, benutzer) VALUES ('"+userID+"', '"+passwort+"', '"+benutzer+"')");
         beende();
     }
     
@@ -65,7 +62,7 @@ public class UsrGateway
     public void erzeugeTabelle()
     {
          verbinde();
-         db.executeStatement("Create table if not exists User (userid INTEGER PRIMARY KEY AUTOINCREMENT, benutzer text, passwort text, userID)");
+         db.executeStatement("Create table if not exists User (userID INTEGER PRIMARY KEY AUTOINCREMENT, benutzer TEXT, passwort TEXT )");
          beende();
     }
     
@@ -76,7 +73,7 @@ public class UsrGateway
     {
         if(db == null)
         {
-            db = new DatabaseConnector("",0,"user","","");
+            db = new DatabaseConnector("",0,"User","","");
         }
     }
     

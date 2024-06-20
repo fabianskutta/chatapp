@@ -39,6 +39,10 @@ public class MsgGateway
                 nachrichten.append(new Nachricht(ergebnis.getData()[i][0], ergebnis.getData()[i][1], ergebnis.getData()[i][2]));
             }
         }
+        if(db.getErrorMessage() != null)
+         {
+             System.out.println(db.getErrorMessage());
+         }
         beende();
         return nachrichten;
     }
@@ -52,7 +56,11 @@ public class MsgGateway
     public void postMessage(String nachricht,int userID, String name)
     {
         verbinde();
-        db.executeStatement("INSERT INTO Nachrichten (nachricht, userID) VALUES ('"+nachricht+"', "+userID+", "+name+")");
+        db.executeStatement("INSERT INTO Nachrichten (nachrichten, userID, name) VALUES ('"+nachricht+"', '"+userID+"', '"+name+"')");
+        if(db.getErrorMessage() != null)
+         {
+             System.out.println(db.getErrorMessage());
+         }
         beende();
     }
     
@@ -62,7 +70,11 @@ public class MsgGateway
     public void erzeugeTabelleNachrichten()
     {
          verbinde();
-         db.executeStatement("Create table if not exists Nachrichten (userid INTEGER PRIMARY KEY AUTOINCREMENT, Nachrichten String, name String)");
+         db.executeStatement("Create table if not exists Nachrichten (userid INTEGER PRIMARY KEY AUTOINCREMENT, nachrichten TEXT, name TEXT)");
+         if(db.getErrorMessage() != null)
+         {
+             System.out.println(db.getErrorMessage());
+         }
          beende();
     }
     

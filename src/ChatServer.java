@@ -15,8 +15,11 @@ public class ChatServer extends Server {
 
     public ChatServer(int port) {
         super(port);
-        msgGateway = new MsgGateway();
         usrGateway = new UsrGateway();
+        usrGateway.erzeugeTabelle();
+        msgGateway = new MsgGateway();
+        msgGateway.erzeugeTabelleNachrichten();
+        
     }
 
     /**
