@@ -48,10 +48,10 @@ public class UsrGateway
      * @param name
      * @param punkte
      */
-    public void hinzufuegen(int userID, String passwort, String benutzer)
+    public void hinzufuegen(String passwort, String benutzer)
     {
         verbinde();
-        db.executeStatement("INSERT INTO User (userID, passwort, benutzer) VALUES ('"+userID+"', '"+passwort+"', '"+benutzer+"')");
+        db.executeStatement("INSERT INTO User (passwort, benutzer) VALUES ('"+passwort+"', '"+benutzer+"')");
         beende();
     }
     
@@ -73,7 +73,7 @@ public class UsrGateway
     {
         if(db == null)
         {
-            db = new DatabaseConnector("",0,"User","","");
+            db = new DatabaseConnector("",0,"Chatapp","","");
         }
     }
     

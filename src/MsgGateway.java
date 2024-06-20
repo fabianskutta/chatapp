@@ -30,7 +30,7 @@ public class MsgGateway
     {
         verbinde();
         List <Nachricht> nachrichten = new List();
-        db.executeStatement("Select userID, nachricht, name from Nachrichten");
+        db.executeStatement("Select * from Nachrichten");
         QueryResult ergebnis = db.getCurrentQueryResult();
         if(ergebnis != null)
         {
@@ -56,7 +56,7 @@ public class MsgGateway
     public void postMessage(String nachricht,int userID, String name)
     {
         verbinde();
-        db.executeStatement("INSERT INTO Nachrichten (nachrichten, userID, name) VALUES ('"+nachricht+"', '"+userID+"', '"+name+"')");
+        db.executeStatement("INSERT INTO Nachrichten (nachrichten, name, userID) VALUES ('"+nachricht+"', '"+name+"', "+userID+")");
         if(db.getErrorMessage() != null)
          {
              System.out.println(db.getErrorMessage());
@@ -70,7 +70,7 @@ public class MsgGateway
     public void erzeugeTabelleNachrichten()
     {
          verbinde();
-         db.executeStatement("Create table if not exists Nachrichten (userid INTEGER PRIMARY KEY AUTOINCREMENT, nachrichten TEXT, name TEXT)");
+         db.executeStatement("Create table if not exists Nachrichten (nID INTEGER PRIMARY KEY AUTOINCREMENT, nachrichten TEXT, name TEXT, userID INTEGER, FOREIGN KEY(userID) REFERENCES User(userID) )");
          if(db.getErrorMessage() != null)
          {
              System.out.println(db.getErrorMessage());
@@ -85,7 +85,7 @@ public class MsgGateway
     {
         if(db == null)
         {
-            db = new DatabaseConnector("",0,"Nachrichten","","");
+            db = new DatabaseConnector("",0,"Chatapp","","");
         }
     }
     

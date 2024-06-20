@@ -1,5 +1,4 @@
 package src;
-
 import javax.swing.*;
 /**
  * Klasse fuer einen SpielClient
