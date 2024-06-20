@@ -51,14 +51,14 @@ public class ChatServer extends Server {
                     send(clientIP, clientPort, "-ERR Registrierung fehlgeschlagen");
                 }
                 break;
-            case "SND":
-                boolean sent = sendeNachricht(gibBereich(message, 2));
-                if (sent) {
-                    send(clientIP, clientPort, "+OK Nachricht gesendet");
-                } else {
-                    send(clientIP, clientPort, "-ERR Senden fehlgeschlagen");
-                }
-                break;
+            //case "SND":
+            //    boolean sent = sendeNachricht(gibBereich(message, 2));
+             //   if (sent) {
+               //     send(clientIP, clientPort, "+OK Nachricht gesendet");
+                //} else {
+              //      send(clientIP, clientPort, "-ERR Senden fehlgeschlagen");
+             //   }
+               // break;
             case "abmelden":
                 send(clientIP, clientPort, "+OK Verbindung getrennt");
                 processClosingConnection(clientIP, clientPort);
@@ -108,7 +108,7 @@ public class ChatServer extends Server {
      */
     private boolean registieren(String name, String passwort) {
         if (istGueltigerName(name) && usrGateway.getUser(name) == null) {
-            usrGateway.hinzufuegen(0, passwort, passwort);
+            usrGateway.hinzufuegen(passwort, passwort);
             return true;
         }
         return false;
@@ -141,18 +141,4 @@ public class ChatServer extends Server {
         return "";
     }
 
-
-    /**
-     * Diese Methode generiert einen String aus den Nachrichten der übergebenen Liste.
-     * Dabei beachtet man das folgende Format:
-     * @param liste Liste mit Objekten vom Typ Eintrag
-     * @return String mit Einträgen durch Leerzeichen getrennt
-     */
-    private String generiereStringAusList(List<Message> liste) {
-        StringBuilder sb = new StringBuilder();
-        for (Message message : liste) {
-            sb.append(message.toString()).append(" ");
-        }
-        return sb.toString().trim();
-    }
 }
